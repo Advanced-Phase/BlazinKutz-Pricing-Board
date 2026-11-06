@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <title>Blazin Kutz — Service Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261105-seamless-gold-2">
+</head>
+<body>
+  <main class="board" aria-label="Blazin Kutz service menu">
+    <div class="ember-field" aria-hidden="true"></div>
+
+    <header class="masthead">
+      <div class="brand-lockup">
+        <img class="logo" src="assets/blazin-kutz-gold-foil.png" alt="Blazin Kutz">
+        <div class="brand-copy">
+          <p class="eyebrow">Washington, DC • Premium Grooming</p>
+          <h1>Fresh cuts.<br><em>Blazin</em> confidence.</h1>
+        </div>
+      </div>
+      <div class="walkin-pill"><span></span> Walk-ins welcome</div>
+    </header>
+
+    <section class="content-grid">
+      <section class="menu" aria-labelledby="menu-heading">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">The lineup</p>
+            <h2 id="menu-heading">Services &amp; pricing</h2>
+          </div>
+          <p>Every service includes a consultation &amp; finishing style.</p>
+        </div>
+
+        <div class="menu-columns" id="menu-columns"></div>
+
+        <div class="menu-note">
+          <span>+</span>
+          <p><strong>Make it yours.</strong> Enhancements, designs, and longer-length services may add time and cost. Ask your barber before we begin.</p>
+        </div>
+      </section>
+
+      <aside class="booking-card" aria-labelledby="booking-heading">
+        <div class="booking-top">
+          <p class="kicker">Skip the wait</p>
+          <h2 id="booking-heading">Lock in<br>your next cut.</h2>
+          <p class="booking-copy">Point your camera at the code. Pick your barber, service, date, and time.</p>
+        </div>
+
+        <a class="qr-wrap" href="https://book.blazinkutz.com/" aria-label="Book an appointment at book.blazinkutz.com">
+          <img src="assets/booking-qr.png" alt="QR code linking to the Blazin Kutz booking page">
+          <span class="scan-corner corner-a"></span><span class="scan-corner corner-b"></span>
+          <span class="scan-corner corner-c"></span><span class="scan-corner corner-d"></span>
+        </a>
+
+        <div class="booking-url">
+          <span class="phone-icon" aria-hidden="true">↗</span>
+          <div><small>Scan to book or visit</small><strong>book.blazinkutz.com</strong></div>
+        </div>
+        <p class="fine-print">Prices shown are starting prices. Appointments are subject to availability.</p>
+      </aside>
+    </section>
+
+    <canvas class="flame-stage" id="flame-canvas" aria-hidden="true"></canvas>
+  </main>
+  <script src="app.js?v=20261105-seamless-gold-2"></script>
+</body>
+</html>
