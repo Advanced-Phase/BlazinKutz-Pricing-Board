@@ -83,7 +83,7 @@ h1 em { color: var(--orange); font-style: italic; }
 .booking-card::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(255,255,255,.035); pointer-events: none; }
 .booking-top h2 { font-size: clamp(43px, calc(4 * var(--board-vw)), 78px); }
 .booking-copy { color: var(--muted); margin: clamp(10px, calc(1.4 * var(--board-vh)), 20px) 0 clamp(12px, calc(2 * var(--board-vh)), 26px); font-size: clamp(10px, calc(.75 * var(--board-vw)), 14px); line-height: 1.55; }
-.qr-wrap { position: relative; display: block; align-self: center; width: min(100%, calc(25 * var(--board-vh))); aspect-ratio: 1; padding: clamp(9px, calc(.8 * var(--board-vw)), 14px); background: #ffffff; }
+.qr-wrap { position: relative; display: block; align-self: center; width: min(100%, calc(25 * var(--board-vh))); aspect-ratio: 1; background: #ffffff; }
 .qr-wrap img { display: block; width: 100%; height: 100%; }
 .scan-corner { position: absolute; width: 22px; height: 22px; border-color: var(--orange); border-style: solid; }
 .corner-a { inset: -6px auto auto -6px; border-width: 3px 0 0 3px; }.corner-b { inset: -6px -6px auto auto; border-width: 3px 3px 0 0; }.corner-c { inset: auto auto -6px -6px; border-width: 0 0 3px 3px; }.corner-d { inset: auto -6px -6px auto; border-width: 0 3px 3px 0; }
@@ -192,7 +192,7 @@ h1 em { color: var(--orange); font-style: italic; }
 .booking-card::before { content: ""; position: absolute; inset: calc(7px * var(--board-scale, 1)); border: calc(1px * var(--board-scale, 1)) solid rgba(255,255,255,.035); pointer-events: none; }
 .booking-top h2 { font-size: clamp(calc(43px * var(--board-scale, 1)), calc(4 * var(--board-vw)), calc(78px * var(--board-scale, 1))); }
 .booking-copy { color: var(--muted); margin: clamp(calc(10px * var(--board-scale, 1)), calc(1.4 * var(--board-vh)), calc(20px * var(--board-scale, 1))) 0 clamp(calc(12px * var(--board-scale, 1)), calc(2 * var(--board-vh)), calc(26px * var(--board-scale, 1))); font-size: clamp(calc(10px * var(--board-scale, 1)), calc(.75 * var(--board-vw)), calc(14px * var(--board-scale, 1))); line-height: 1.55; }
-.qr-wrap { position: relative; display: block; align-self: center; width: min(100%, calc(25 * var(--board-vh))); aspect-ratio: 1; padding: clamp(calc(9px * var(--board-scale, 1)), calc(.8 * var(--board-vw)), calc(14px * var(--board-scale, 1))); background: #ffffff; }
+.qr-wrap { position: relative; display: block; align-self: center; width: min(100%, calc(25 * var(--board-vh))); aspect-ratio: 1; background: #ffffff; }
 .qr-wrap img { display: block; width: 100%; height: 100%; }
 .scan-corner { position: absolute; width: calc(22px * var(--board-scale, 1)); height: calc(22px * var(--board-scale, 1)); border-color: var(--orange); border-style: solid; }
 .corner-a { inset: calc(-6px * var(--board-scale, 1)) auto auto calc(-6px * var(--board-scale, 1)); border-width: calc(3px * var(--board-scale, 1)) 0 0 calc(3px * var(--board-scale, 1)); }.corner-b { inset: calc(-6px * var(--board-scale, 1)) calc(-6px * var(--board-scale, 1)) auto auto; border-width: calc(3px * var(--board-scale, 1)) calc(3px * var(--board-scale, 1)) 0 0; }.corner-c { inset: auto auto calc(-6px * var(--board-scale, 1)) calc(-6px * var(--board-scale, 1)); border-width: 0 0 calc(3px * var(--board-scale, 1)) calc(3px * var(--board-scale, 1)); }.corner-d { inset: auto calc(-6px * var(--board-scale, 1)) calc(-6px * var(--board-scale, 1)) auto; border-width: 0 calc(3px * var(--board-scale, 1)) calc(3px * var(--board-scale, 1)) 0; }
