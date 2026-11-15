@@ -3,13 +3,15 @@ const services = [
   { name: "Signature fade", detail: "Low, mid, high, or skin fade", price: 45, featured: true },
   { name: "Classic haircut", detail: "Even cut, taper, and finish", price: 40 },
   { name: "Cut + beard", detail: "Haircut, beard sculpt, hot towel", price: 60 },
-  { name: "Kids cut", detail: "Ages 12 & under • Mon–Thu", price: 30 },
-  { name: "Senior cut", detail: "Ages 65+ • Mon–Thu", price: 30 },
+  { name: "Kids cut", detail: "Ages 12 & under", price: 35 },
+  { name: "Senior cut", detail: "Ages 65+", price: 35 },
+  { name: "Military discount", detail: "Monday–Thursday", price: 30 },
   { name: "Crisp line-up", detail: "Hairline, neck, and razor finish", price: 25 },
   { name: "Beard sculpt", detail: "Shape, trim, and razor line", price: 30 },
-  { name: "Hot towel shave", detail: "Full face • steam and aftercare", price: 40 },
+  { name: "Hot towel and razor shave", detail: "", price: 60 },
   { name: "Hair design", detail: "Custom freestyle design • from", price: 15, prefix: "+" },
-  { name: "Color enhancement", detail: "Temporary line and beard fill", price: 15, prefix: "+" }
+  { name: "Color enhancement", detail: "Temporary line and beard fill", price: 15, prefix: "+" },
+  { name: "Early bird special", detail: "8 a.m.–11 a.m.", price: 35 }
 ];
 
 const columns = document.querySelector("#menu-columns");

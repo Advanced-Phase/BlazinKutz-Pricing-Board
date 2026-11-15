@@ -266,3 +266,5 @@ h1 em, .service-price {
 @media (max-width: 1024px) {
   .viewport-changing h1 em, .viewport-changing .service-price { animation-play-state: paused; }
 }
+
+.loyalty-note { color: var(--gold); }
