@@ -103,6 +103,10 @@ ssh kioskadmin@PI_NAME 'sudo bash ~/install-wifi-menu.sh'
 
 Close any open Wi-Fi menu and press **Ctrl+Alt+W** again. This installs the menu and a NetworkManager permission rule scoped to the active local kiosk account. The rule allows that account to manage NetworkManager profiles, so use the editor on the dedicated kiosk.
 
+### TV setup
+
+The board is designed for a 16:9 display at 1920 × 1080. The kiosk lets the Pi negotiate the HDMI mode with the TV, so a 4K set may use 3840 × 2160. Use the TV’s **Screen Fit**, **Just Scan**, or **1:1** picture size if it crops the outer edges. Turn off the TV’s own sleep or eco timer.
+
 ## View the HDMI output remotely with WayVNC
 
 The image starts WayVNC in the same Labwc session as Chromium, so it mirrors the connected output, including animations and local dialogs. Use one HDMI display for the kiosk. WayVNC disables remote keyboard and mouse input and automatic display resizing. Capture is limited to 15 fps to reduce bandwidth. The local display keeps its normal animation speed.
