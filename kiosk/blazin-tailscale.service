@@ -1,0 +1,10 @@
+[Unit]
+Description=Tailscale for Blazin Kutz kiosk
+After=network.target
+[Service]
+RuntimeDirectory=tailscale
+StateDirectory=tailscale
+ExecStart=/usr/local/sbin/tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/run/tailscale/tailscaled.sock
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

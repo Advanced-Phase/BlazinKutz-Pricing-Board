@@ -1,0 +1,7 @@
+[Unit]
+Description=Check for board content updates every five minutes
+[Timer]
+OnBootSec=30s
+OnUnitInactiveSec=5min
+[Install]
+WantedBy=timers.target

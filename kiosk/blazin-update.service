@@ -1,0 +1,6 @@
+[Unit]
+Description=Update local Blazin Kutz site files from GitHub
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/blazin-kiosk/site.py update
+TimeoutStartSec=180

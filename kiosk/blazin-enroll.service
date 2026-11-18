@@ -1,0 +1,10 @@
+[Unit]
+Description=Enroll this kiosk in Tailscale from a one-time boot file
+Requires=blazin-tailscale.service
+After=blazin-tailscale.service
+ConditionPathExists=/boot/firmware/tailscale.key
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/tailscale up --ssh --auth-key=file:/boot/firmware/tailscale.key --timeout=25s
+ExecStartPost=/usr/bin/rm /boot/firmware/tailscale.key
+TimeoutStartSec=35

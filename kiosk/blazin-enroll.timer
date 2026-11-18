@@ -1,0 +1,7 @@
+[Unit]
+Description=Retry one-time Tailscale enrollment when internet becomes available
+[Timer]
+OnBootSec=20s
+OnUnitInactiveSec=2min
+[Install]
+WantedBy=timers.target

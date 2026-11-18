@@ -1,0 +1,12 @@
+#!/bin/sh
+# With a dedicated labwc autostart we never launch the desktop idle daemon.
+(
+  until curl -fsS http://127.0.0.1:8080/revision >/dev/null; do sleep 1; done
+  while true; do
+    chromium --kiosk --no-first-run --no-default-browser-check \
+      --disable-session-crashed-bubble --disable-background-timer-throttling \
+      --disable-backgrounding-occluded-windows --disable-renderer-backgrounding \
+      --user-data-dir=/var/lib/blazin-kiosk/chromium http://127.0.0.1:8080/
+    sleep 1
+  done
+) &

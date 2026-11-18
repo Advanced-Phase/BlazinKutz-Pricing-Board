@@ -3,3 +3,12 @@
 /previews/
 /blazin-kutz-*/
 /assets/blazin-kutz-logo.png
+
+/kiosk/wifi.json
+/kiosk/tailscale.key
+__pycache__/
+/wifi.json
+/tailscale.key
+*.img
+*.img.xz
+*.img.xz.sha256

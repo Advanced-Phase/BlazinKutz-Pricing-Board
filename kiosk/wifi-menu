@@ -1,0 +1,15 @@
+#!/bin/bash
+# NetworkManager asks for the password directly. Never put it in argv or logs.
+old=$(nmcli -g GENERAL.CON-UUID device show wlan0 2>/dev/null)
+nmcli device wifi list ifname wlan0
+read -r -p 'Enter Wi-Fi SSID (Enter to cancel): ' ssid
+[ -n "$ssid" ] || exit 0
+if nmcli --ask --wait 25 device wifi connect "$ssid" ifname wlan0; then
+  printf 'Wi-Fi connected. Close this window to return to the board.\n'
+else
+  if [ -n "$old" ] && [ "$old" != "--" ]; then
+    nmcli --wait 20 connection up uuid "$old" ifname wlan0
+  fi
+  printf 'Could not connect. Press Ctrl+Alt+W to try again.\n'
+fi
+read -r -p 'Press Enter to close. ' _

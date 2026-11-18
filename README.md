@@ -47,3 +47,7 @@ Pushing to GitHub tracks and distributes the source files; it does not automatic
 The gold shimmer and drifting embers ease back and forth with matching loop endpoints. Reduced-motion preferences are respected. Mobile renders the composition using scaled CSS lengths and pauses animation briefly while viewport changes settle. Its flame canvas uses a fixed 960 × 103 backing store to avoid reallocating the canvas during rotation.
 
 Local Chrome/WebKit checks cover desktop/mobile fit, seamless CSS loop boundaries, and animation resuming after rotation. Physical iPhone Safari verification remains a separate check.
+
+## Raspberry Pi 5 kiosk
+
+See [the kiosk guide](kiosk/README.md) for the SD image build, Wi-Fi provisioning, Tailscale SSH and offline update behavior.

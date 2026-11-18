@@ -1,0 +1,10 @@
+[Unit]
+Description=Import preloaded local Wi-Fi profiles
+After=NetworkManager.service
+Wants=NetworkManager.service
+ConditionPathExists=/boot/firmware/wifi.json
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/blazin-kiosk/wifi-import.py
+[Install]
+WantedBy=multi-user.target

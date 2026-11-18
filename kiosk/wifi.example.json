@@ -1,0 +1,5 @@
+{
+  "networks": [
+    { "ssid": "Your Wi-Fi name", "password": "Your Wi-Fi password" }
+  ]
+}
