@@ -6,10 +6,10 @@ This image uses Raspberry Pi OS Desktop (64-bit) dated 2026-10-06, Chromium, lab
 
 Both programs can flash this prebuilt kiosk image. Use whichever you already have. Start with a 16 GB or larger microSD card. Flashing erases the selected card, so double-check the destination by name and capacity.
 
-Put `BlazinKutz-Pi5-Kiosk.img.xz` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and verify the download:
+Put `BlazinKutz-Pi5-Kiosk-WayVNC.img` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and verify the download:
 
 ```sh
-shasum -a 256 -c BlazinKutz-Pi5-Kiosk.img.xz.sha256
+shasum -a 256 -c BlazinKutz-Pi5-Kiosk-WayVNC.img.sha256
 ```
 
 Proceed when it reports `OK`.
@@ -17,16 +17,18 @@ Proceed when it reports `OK`.
 ### Option A: balenaEtcher
 
 1. Open [balenaEtcher](https://etcher.balena.io/) and insert the microSD card.
-2. Click **Flash from file** and select `BlazinKutz-Pi5-Kiosk.img.xz`. Etcher supports XZ images. If your copy of Etcher has trouble with the compressed file, run `xz -dk BlazinKutz-Pi5-Kiosk.img.xz` and select the resulting `.img` instead.
+2. Click **Flash from file** and select `BlazinKutz-Pi5-Kiosk-WayVNC.img`.
 3. Click **Select target** and choose the microSD card.
 4. Click **Flash!** and approve the operating system prompt if shown. Wait for writing and validation to finish.
 
 ### Option B: Raspberry Pi Imager
 
 1. Open [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and insert the microSD card.
-2. Select **Raspberry Pi 5** as the device. Under OS, choose **Use custom** and select `BlazinKutz-Pi5-Kiosk.img.xz`.
+2. Select **Raspberry Pi 5** as the device. Under OS, choose **Use custom** and select `BlazinKutz-Pi5-Kiosk-WayVNC.img`.
 3. Under Storage, select the microSD card. If prompted, choose **Skip customisation**. This image already includes its first-boot setup.
 4. Confirm the write and wait for verification to finish.
+
+The same flashing steps apply to older or custom `.img.xz` builds. If Etcher has trouble with a compressed image, run `xz -dk YOUR_IMAGE.img.xz` and select the resulting `.img`.
 
 ### After flashing with either tool
 
@@ -101,6 +103,40 @@ ssh kioskadmin@PI_NAME 'sudo bash ~/install-wifi-menu.sh'
 
 Close any open Wi-Fi menu and press **Ctrl+Alt+W** again. This installs the menu and a NetworkManager permission rule scoped to the active local kiosk account. The rule allows that account to manage NetworkManager profiles, so use the editor on the dedicated kiosk.
 
+## View the HDMI output remotely with WayVNC
+
+The image starts WayVNC in the same Labwc session as Chromium, so it mirrors the connected output, including animations and local dialogs. Use one HDMI display for the kiosk. WayVNC disables remote keyboard and mouse input and automatic display resizing. Capture is limited to 15 fps to reduce bandwidth. The local display keeps its normal animation speed.
+
+WayVNC listens only on the Pi’s loopback address `127.0.0.1:5900`. Use the existing Tailscale SSH connection to tunnel to that port. The shop LAN and public internet have no VNC listener. There is no separate VNC password because the tunnel requires an authorized Tailscale SSH login. Keep the SSH policy scoped to your administrators. The password screen in the Wi-Fi menu is visible to an authorized viewer if someone opens it locally.
+
+1. Boot the Pi with HDMI connected. Enroll it with `tailscale.key` using the instructions above. From your viewing computer, sign into the same tailnet and verify that `ssh kioskadmin@PI_NAME` works.
+2. On the viewing computer, start the tunnel. Replace `PI_NAME` with the Pi’s Tailscale hostname or IP address. Leave this terminal open.
+
+   ```sh
+   ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:5901:127.0.0.1:5900 kioskadmin@PI_NAME
+   ```
+
+3. Open a VNC viewer on that same computer. On a Mac, try Finder → **Go → Connect to Server** and enter `vnc://127.0.0.1:5901`. With TigerVNC Viewer, enter `127.0.0.1::5901` (the double colon selects a TCP port). If a viewer rejects the local no-password connection, use TigerVNC.
+4. Close the viewer and press **Ctrl+C** in the tunnel terminal when finished.
+
+If the tunnel opens but the viewer shows no screen, verify that the kiosk session is logged in and HDMI is connected. From SSH, run:
+
+```sh
+ss -ltn 'sport = :5900'
+sudo tail -n 30 /home/board/.blazin-wayvnc.log
+```
+
+The listener should appear as `127.0.0.1:5900`. WayVNC needs a running graphical session and a detected output. Its picture confirms what the Pi renders and cannot verify which input the TV is actually showing. See [WayVNC](https://manpages.debian.org/trixie/wayvnc/wayvnc.1.en.html) and [Tailscale SSH](https://tailscale.com/docs/features/tailscale-ssh).
+
+### Add WayVNC to an already flashed kiosk
+
+Copy the updated files from the project directory to an enrolled Pi. Restarting LightDM in the last step briefly interrupts the displayed board.
+
+```sh
+scp kiosk/{autostart,wayvnc.conf} kioskadmin@PI_NAME:
+ssh kioskadmin@PI_NAME 'sudo install -m 644 ~/wayvnc.conf /opt/blazin-kiosk/wayvnc.conf && sudo install -m 755 ~/autostart /opt/blazin-kiosk/autostart && sudo install -o board -g board -m 755 ~/autostart /home/board/.config/labwc/autostart && sudo systemctl restart lightdm'
+```
+
 ## Content and update recovery
 
 The Pi tracks the `pi-kiosk` branch during this rollout. Commit pricing edits to `menu.json` there. The public website tracks `main` separately. A timer checks the GitHub tree at boot and about every five minutes. It downloads only changed site blobs, checks their hashes, validates the staged menu and referenced files, and switches the site directory atomically. The browser detects the local revision change and reloads. Changes to the OS scripts in this directory are applied by rebuilding the image or maintaining the Pi over SSH.
@@ -109,12 +145,12 @@ For diagnostics use `journalctl -u blazin-update -u blazin-wifi -u blazin-enroll
 
 ## Rebuild the image
 
-Use Python 3.11+, Git, mtools and xz. Run from the checked-out `pi-kiosk` branch. The builder verifies both pinned archives and modifies a workspace image file only.
+Use Python 3.11+, Git and mtools. Install xz if you want a compressed output. Run from the checked-out `pi-kiosk` branch. The builder verifies both pinned archives and modifies a workspace image file only.
 
 ```sh
 curl -fLO https://downloads.raspberrypi.com/raspios_arm64/images/raspios_arm64-2026-10-06/2026-10-06-raspios-trixie-arm64.img.xz
 curl -fLO https://pkgs.tailscale.com/stable/tailscale_1.104.7_arm64.tgz
-python3 kiosk/build-image.py 2026-10-06-raspios-trixie-arm64.img.xz tailscale_1.104.7_arm64.tgz BlazinKutz-Pi5-Kiosk.img.xz
+python3 kiosk/build-image.py 2026-10-06-raspios-trixie-arm64.img.xz tailscale_1.104.7_arm64.tgz BlazinKutz-Pi5-Kiosk-WayVNC.img
 ```
 
-Use the generated SHA-256 file to check the compressed image before flashing. Never add real provisioning files or disk images to Git.
+Use the generated SHA-256 file to check the image before flashing. Use an output name ending in `.img.xz` for a compressed build. Never add real provisioning files or disk images to Git.

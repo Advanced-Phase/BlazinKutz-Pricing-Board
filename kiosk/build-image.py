@@ -71,10 +71,13 @@ def build(os_archive, tailscale_archive, output):
         subprocess.run(["mcopy", "-i", fat, "-s", str(payload), "::/"], check=True)
         subprocess.run(["mcopy", "-i", fat, str(HERE / "wifi.example.json"), "::wifi.example.json"], check=True)
         subprocess.run(["mdir", "-i", fat, "::blazin-kiosk"], check=True)
-        compressed = work / "kiosk.img.xz"
-        with compressed.open("wb") as target:
-            subprocess.run(["xz", "-T2", "-3", "-c", str(image)], stdout=target, check=True)
-        compressed.replace(output)
+        if output.suffix == ".img":
+            image.replace(output)
+        else:
+            compressed = work / "kiosk.img.xz"
+            with compressed.open("wb") as target:
+                subprocess.run(["xz", "-T2", "-3", "-c", str(image)], stdout=target, check=True)
+            compressed.replace(output)
     with output.open("rb") as stream:
         digest = hashlib.file_digest(stream, "sha256").hexdigest()
     output.with_name(output.name + ".sha256").write_text(f"{digest}  {output.name}\n")
@@ -82,5 +85,5 @@ def build(os_archive, tailscale_archive, output):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        raise SystemExit("Usage: build-image.py BASE.img.xz TAILSCALE.tgz OUTPUT.img.xz")
+        raise SystemExit("Usage: build-image.py BASE.img.xz TAILSCALE.tgz OUTPUT.img[.xz]")
     build(*(Path(argument).resolve() for argument in sys.argv[1:]))

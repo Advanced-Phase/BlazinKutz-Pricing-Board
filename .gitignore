@@ -12,3 +12,5 @@ __pycache__/
 *.img
 *.img.xz
 *.img.xz.sha256
+
+*.img.sha256

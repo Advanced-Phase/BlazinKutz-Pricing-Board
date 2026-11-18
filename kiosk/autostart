@@ -10,3 +10,13 @@
     sleep 1
   done
 ) &
+
+# Mirror the compositor's connected output without remote input or resize.
+# The listener is reachable through the authorized Tailscale SSH tunnel.
+(
+  while true; do
+    /usr/bin/wayvnc --config=/opt/blazin-kiosk/wayvnc.conf --disable-input \
+      --disable-resizing --max-fps=15 127.0.0.1 5900
+    sleep 5
+  done
+) >>"$HOME/.blazin-wayvnc.log" 2>&1 &
