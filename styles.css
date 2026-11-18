@@ -267,8 +267,8 @@ h1 em, .service-price {
   .viewport-changing h1 em, .viewport-changing .service-price { animation-play-state: paused; }
 }
 
-.loyalty-note { color: var(--gold); }
+.loyalty-note { color: var(--gold); font-size: 1.12em; text-transform: uppercase; }
 
 .early-bird { grid-column: 1 / -1; justify-self: center; width: calc((100% - var(--menu-column-gap)) / 2); }
 
-.hot-towel-note { color: var(--gold); font-weight: 700; font-size: 1.12em; }
+.hot-towel-note { color: var(--gold); font-weight: 700; font-size: 1.12em; text-transform: uppercase; }
