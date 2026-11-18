@@ -6,8 +6,7 @@ This image uses Raspberry Pi OS Desktop (64-bit) dated 2026-10-06, Chromium, lab
 
 Both programs can flash this prebuilt kiosk image. Use whichever you already have. Flashing erases the selected card, so double-check the destination by name and capacity.
 
-- **Suggested minimum for this kiosk image — 16 GB.** The image is about 6.3 GiB before the filesystem expands. Use 16 GB for initial setup or as a spare.
-- **Preferred for the shop — 32 GB high-endurance microSD.** The extra space gives Raspberry Pi OS updates, logs, and saved kiosk versions room to grow. Raspberry Pi also recommends at least 32 GB for its desktop OS. [Raspberry Pi storage guidance](https://www.raspberrypi.com/documentation/computers/getting-started.html#recommended-minimum-storage-requirements)
+**Recommended card: 32 GB high-endurance microSD.** This gives Raspberry Pi OS updates, logs, and saved kiosk versions room to grow. Raspberry Pi also recommends at least 32 GB for its desktop OS. [Raspberry Pi storage guidance](https://www.raspberrypi.com/documentation/computers/getting-started.html#recommended-minimum-storage-requirements)
 
 Put `BlazinKutz-Pi5-Kiosk-WayVNC.img` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and verify the download:
 
