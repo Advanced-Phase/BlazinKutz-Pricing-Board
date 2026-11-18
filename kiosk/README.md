@@ -8,10 +8,10 @@ Both programs can flash this prebuilt kiosk image. Use whichever you already hav
 
 **Recommended card: 32 GB high-endurance microSD.** This gives Raspberry Pi OS updates, logs, and saved kiosk versions room to grow. Raspberry Pi also recommends at least 32 GB for its desktop OS. [Raspberry Pi storage guidance](https://www.raspberrypi.com/documentation/computers/getting-started.html#recommended-minimum-storage-requirements)
 
-Put `BlazinKutz-Pi5-Kiosk-WayVNC.img` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and verify the download:
+Put `BlazinKutz-Pi5-Kiosk-ManualSync.img` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and verify the download:
 
 ```sh
-shasum -a 256 -c BlazinKutz-Pi5-Kiosk-WayVNC.img.sha256
+shasum -a 256 -c BlazinKutz-Pi5-Kiosk-ManualSync.img.sha256
 ```
 
 Proceed when it reports `OK`.
@@ -19,14 +19,14 @@ Proceed when it reports `OK`.
 ### Option A: balenaEtcher
 
 1. Open [balenaEtcher](https://etcher.balena.io/) and insert the microSD card.
-2. Click **Flash from file** and select `BlazinKutz-Pi5-Kiosk-WayVNC.img`.
+2. Click **Flash from file** and select `BlazinKutz-Pi5-Kiosk-ManualSync.img`.
 3. Click **Select target** and choose the microSD card.
 4. Click **Flash!** and approve the operating system prompt if shown. Wait for writing and validation to finish.
 
 ### Option B: Raspberry Pi Imager
 
 1. Open [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and insert the microSD card.
-2. Select **Raspberry Pi 5** as the device. Under OS, choose **Use custom** and select `BlazinKutz-Pi5-Kiosk-WayVNC.img`.
+2. Select **Raspberry Pi 5** as the device. Under OS, choose **Use custom** and select `BlazinKutz-Pi5-Kiosk-ManualSync.img`.
 3. Under Storage, select the microSD card. If prompted, choose **Skip customisation**. This image already includes its first-boot setup.
 4. Confirm the write and wait for verification to finish.
 
@@ -82,8 +82,9 @@ Your Tailscale identity authorizes SSH. There is no root password, SSH password,
 1. Insert the card in the Pi 5 and connect HDMI and power. Let the initial provisioning and automatic reboot finish. The board runs from the Pi even if Wi-Fi or Tailscale is unavailable.
 2. Turn off any auto-off or eco timer on the TV itself. The Pi kiosk is configured to stay awake.
 3. If Wi-Fi changes, plug in a keyboard and press **Ctrl+Alt+W**. The board runs behind the menu. Choose **View saved Wi-Fi profiles and passwords** to see the active connection name and saved Wi-Fi settings. Passwords are visible on the TV while that option is open. Press Enter to hide them. Choose **Edit or add a Wi-Fi profile**, then select an existing profile or choose **Add → Wi-Fi**. Enter the SSID and security settings, set the password, and save. Choose **Activate a saved network** to connect. If the new profile fails, select your previous network.
-4. Press **Escape** from any Wi-Fi menu screen to close the window and discard edits still in the open form. Changes already saved or activation already submitted are kept. To save first, choose **OK** inside the editor before pressing Escape.
-5. If you skipped Tailscale or its key expires before use, shut down the Pi, put a fresh `tailscale.key` on **bootfs**, and boot again. No reflash is needed.
+4. Choose **Force pricing board update** to sync immediately. When the sync finishes or times out, the Wi-Fi window shows **Update Successful: No New Updates**, **Update Successful: Board Updated**, or **Update failed** for seven seconds, then returns to the menu. If the sync fails, the last working board stays on screen.
+5. Press **Escape** from any Wi-Fi menu screen to close the window and discard edits still in the open form. Changes already saved or activation already submitted are kept. To save first, choose **OK** inside the editor before pressing Escape.
+6. If you skipped Tailscale or its key expires before use, shut down the Pi, put a fresh `tailscale.key` on **bootfs**, and boot again. No reflash is needed.
 
 After SSH is working, check Wi-Fi, Tailscale, and the local display service with:
 
@@ -107,7 +108,7 @@ scp kiosk/{wifi-menu,wifi-menu-ui,49-blazin-wifi.rules,install-wifi-menu.sh} kio
 ssh kioskadmin@PI_NAME 'sudo bash ~/install-wifi-menu.sh'
 ```
 
-Close any open Wi-Fi menu and press **Ctrl+Alt+W** again. This installs the menu and a NetworkManager permission rule scoped to the active local kiosk account. The rule allows that account to manage NetworkManager profiles, so use the editor on the dedicated kiosk.
+Close any open Wi-Fi menu and press **Ctrl+Alt+W** again. This installs the menu and permissions scoped to the active local kiosk account. The manual sync permission only allows starting `blazin-update.service`. The rule allows that account to manage NetworkManager profiles, so use the editor on the dedicated kiosk.
 
 ### TV setup
 
@@ -160,7 +161,7 @@ Use Python 3.11+, Git and mtools. Install xz if you want a compressed output. Ru
 ```sh
 curl -fLO https://downloads.raspberrypi.com/raspios_arm64/images/raspios_arm64-2026-10-06/2026-10-06-raspios-trixie-arm64.img.xz
 curl -fLO https://pkgs.tailscale.com/stable/tailscale_1.104.7_arm64.tgz
-python3 kiosk/build-image.py 2026-10-06-raspios-trixie-arm64.img.xz tailscale_1.104.7_arm64.tgz BlazinKutz-Pi5-Kiosk-WayVNC.img
+python3 kiosk/build-image.py 2026-10-06-raspios-trixie-arm64.img.xz tailscale_1.104.7_arm64.tgz BlazinKutz-Pi5-Kiosk-ManualSync.img
 ```
 
 Use the generated SHA-256 file to check the image before flashing. Use an output name ending in `.img.xz` for a compressed build. Never add real provisioning files or disk images to Git.

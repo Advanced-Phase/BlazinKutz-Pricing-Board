@@ -1,5 +1,29 @@
 #!/bin/bash
 # Keep passwords on the attached display and out of shell arguments and logs.
+force_board_update() {
+  local before after message
+  clear
+  printf 'Syncing the pricing board…\n'
+
+  if before=$(readlink /var/lib/blazin-kiosk/current) &&
+     timeout 190s systemctl --no-ask-password start blazin-update.service &&
+     after=$(readlink /var/lib/blazin-kiosk/current); then
+    if [ "$before" = "$after" ]; then
+      message='Update Successful: No New Updates'
+    else
+      message='Update Successful: Board Updated'
+    fi
+  else
+    message='Update failed'
+  fi
+
+  clear
+  printf '+-------------------------------------+\n'
+  printf '| %-35s |\n' "$message"
+  printf '+-------------------------------------+\n'
+  sleep 7
+}
+
 while true; do
   clear
   printf 'Wi-Fi setup\n\n'
@@ -7,7 +31,8 @@ while true; do
   printf '\n1) View saved Wi-Fi profiles and passwords\n'
   printf '2) Edit or add a Wi-Fi profile\n'
   printf '3) Activate a saved network\n'
-  printf '4) Return to the pricing board (or press Escape)\n\n'
+  printf '4) Force pricing board update\n'
+  printf '5) Return to the pricing board (or press Escape)\n\n'
   read -r -p 'Choose an option: ' choice || exit 0
   case "$choice" in
     1)
@@ -23,6 +48,7 @@ while true; do
       ;;
     2) nmtui edit ;;
     3) nmtui connect ;;
-    4|'') clear; exit 0 ;;
+    4) force_board_update ;;
+    5|'') clear; exit 0 ;;
   esac
 done

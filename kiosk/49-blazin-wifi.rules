@@ -7,3 +7,13 @@ polkit.addRule(function(action, subject) {
         return polkit.Result.YES;
     }
 });
+
+// Permit only starting the existing pricing sync from the active kiosk session.
+polkit.addRule(function(action, subject) {
+    if (subject.user === "board" && subject.local && subject.active &&
+        action.id === "org.freedesktop.systemd1.manage-units" &&
+        action.lookup("unit") === "blazin-update.service" &&
+        action.lookup("verb") === "start") {
+        return polkit.Result.YES;
+    }
+});
