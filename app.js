@@ -5,23 +5,25 @@ const services = [
   { name: "Cut + beard", detail: "Haircut, beard sculpt, hot towel", price: 60 },
   { name: "Kids cut", detail: "Ages 12 & under", price: 35 },
   { name: "Senior cut", detail: "Ages 65+", price: 35 },
-  { name: "Military discount", detail: "Monday–Thursday", price: 30 },
+  { name: "Military discount", detail: "Monday–Wednesday", price: 30, offer: true },
   { name: "Crisp line-up", detail: "Hairline, neck, and razor finish", price: 25 },
-  { name: "Beard sculpt", detail: "Shape, trim, and razor line", price: 30 },
+  { name: "Beard sculpt", detail: "Shape, trim, and razor line", price: 25 },
   { name: "Hot towel and razor shave", detail: "", price: 60 },
   { name: "Hair design", detail: "Custom freestyle design • from", price: 15, prefix: "+" },
   { name: "Color enhancement", detail: "Temporary line and beard fill", price: 15, prefix: "+" },
-  { name: "Early bird special", detail: "8 a.m.–11 a.m.", price: 35 }
+  { name: "Facials", detail: "", price: 55, suffix: "+" }
 ];
 
 const columns = document.querySelector("#menu-columns");
+const earlyBird = { name: "Early bird special", detail: "8 a.m.–11 a.m. • Monday–Thursday", price: 35, offer: true };
 const midpoint = Math.ceil(services.length / 2);
+let serviceNumber = 0;
 
-[services.slice(0, midpoint), services.slice(midpoint)].forEach((group, columnIndex) => {
+[services.slice(0, midpoint), [...services.slice(midpoint), earlyBird]].forEach(group => {
   const column = document.createElement("div");
   column.className = "menu-column";
-  group.forEach((service, index) => {
-    const number = String(columnIndex * midpoint + index + 1).padStart(2, "0");
+  group.forEach(service => {
+    const number = service.offer ? "" : String(++serviceNumber).padStart(2, "0");
     const item = document.createElement("article");
     item.className = `menu-item${service.featured ? " featured" : ""}`;
     item.innerHTML = `
@@ -30,7 +32,7 @@ const midpoint = Math.ceil(services.length / 2);
         <div class="service-name">${service.name}</div>
         <div class="service-detail">${service.detail}</div>
       </div>
-      <strong class="service-price">${service.prefix || ""}$${service.price}</strong>`;
+      <strong class="service-price">${service.prefix || ""}$${service.price}${service.suffix || ""}</strong>`;
     column.appendChild(item);
   });
   columns.appendChild(column);
