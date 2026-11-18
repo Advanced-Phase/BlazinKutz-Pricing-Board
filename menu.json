@@ -1,0 +1,94 @@
+{
+  "copy": {
+    "location": "Baltimore/Washinton DC area • Premium Grooming",
+    "headline": "Fresh cuts.",
+    "brandAccent": "Blazin",
+    "headlineEnding": " confidence.",
+    "walkIns": " Walk-ins welcome",
+    "menuKicker": "The lineup",
+    "menuHeading": "Services & pricing",
+    "consultation": "Every service includes a consultation & finishing style.",
+    "hotTowel": "All adult haircuts come with hot towel service.",
+    "extrasHeading": "Make it yours.",
+    "extras": " Enhancements, designs, and longer-length services may add time and cost. Ask your barber before we begin.",
+    "loyalty": "Ask about loyalty pricing programs",
+    "bookingKicker": "Skip the wait",
+    "bookingHeading": "Lock in",
+    "bookingHeadingEnding": "your next cut.",
+    "bookingInstructions": "Scan the code to visit our website.",
+    "bookingLabel": "Scan or visit",
+    "bookingDomain": "blazinkutz.com",
+    "finePrint": "Prices shown are starting prices. Appointments are subject to availability."
+  },
+  "services": [
+    {
+      "name": "Signature fade",
+      "detail": "Low, mid, high, or skin fade",
+      "price": 45,
+      "featured": true
+    },
+    {
+      "name": "Classic haircut",
+      "detail": "Even cut, taper, and finish",
+      "price": 40
+    },
+    {
+      "name": "Cut + beard",
+      "detail": "Haircut, beard sculpt, hot towel",
+      "price": 60
+    },
+    {
+      "name": "Kids cut",
+      "detail": "Ages 12 & under",
+      "price": 35
+    },
+    {
+      "name": "Senior cut",
+      "detail": "Ages 65+",
+      "price": 35
+    },
+    {
+      "name": "Military discount",
+      "detail": "Monday–Wednesday",
+      "price": 30
+    },
+    {
+      "name": "Crisp line-up",
+      "detail": "Hairline, neck, and razor finish",
+      "price": 25
+    },
+    {
+      "name": "Beard sculpt",
+      "detail": "Shape, trim, and razor line",
+      "price": 25
+    },
+    {
+      "name": "Hot towel and razor shave",
+      "detail": "",
+      "price": 60
+    },
+    {
+      "name": "Hair design",
+      "detail": "Custom freestyle design • from",
+      "price": 15,
+      "prefix": "+"
+    },
+    {
+      "name": "Color enhancement",
+      "detail": "Temporary line and beard fill",
+      "price": 15,
+      "prefix": "+"
+    },
+    {
+      "name": "Facials",
+      "detail": "",
+      "price": 55,
+      "suffix": "+"
+    }
+  ],
+  "earlyBird": {
+    "name": "Early bird special",
+    "detail": "8 a.m.–11 a.m. • Monday–Thursday",
+    "price": 35
+  }
+}

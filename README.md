@@ -6,7 +6,8 @@ A public, version-controlled home for the Blazin Kutz service menu, maintained b
 
 - `index.html` — board layout and booking link.
 - `styles.css` — desktop/mobile sizing, gold theme, and seamless CSS animations.
-- `app.js` — service names, prices, mobile fitting, and animated flame rendering.
+- `menu.json` — service names, prices, the Early Bird special, and board copy.
+- `app.js` — menu rendering, mobile fitting, and animated flames.
 - `assets/blazin-kutz-gold-foil.png` — current transparent logo.
 - `assets/booking-qr.png` — booking QR code.
 
@@ -22,11 +23,10 @@ Open <http://localhost:8080>. For a Raspberry Pi display, use Chromium fullscree
 
 ## Change pricing
 
-1. Edit the `services` array at the top of `app.js`.
-2. Each entry supports `name`, `detail`, `price`, and optional `prefix` or `featured` fields. Keep `price` numeric; the page adds the dollar sign.
-3. When changing JavaScript or CSS, update the matching `?v=` value in `index.html` so returning browsers request the new file. For example, use `app.js?v=20261105-prices-1` after a pricing update.
-4. Preview the board on desktop and in both mobile orientations.
-5. Commit and push the change with a descriptive message, such as `Update signature fade price`.
+1. Edit `menu.json`. Use `services` for the numbered rows, `earlyBird` for the centered special, and `copy` for headings and notes.
+2. Keep `price` numeric. The board adds the dollar sign. Optional `prefix` and `suffix` fields support displays like `+$15` and `$55+`.
+3. Preview through the local server above. The browser loads the JSON over HTTP.
+4. Commit and push to your working branch. GitHub Pages publishes from `main`.
 
 GitHub's commit history records each update. Use a pull request when a change needs review.
 
@@ -38,7 +38,7 @@ Download the current files from [Code → Download ZIP](https://github.com/Advan
 git clone https://github.com/Advanced-Phase/BlazinKutz-Pricing-Board.git
 ```
 
-Extract the archive and upload `index.html`, `styles.css`, `app.js`, and the `assets` directory together to the website directory, replacing the previous versions. Upload the contents of the repository folder rather than nesting that folder inside the website directory.
+Extract the archive and upload `index.html`, `styles.css`, `app.js`, `menu.json`, and the `assets` directory together to the website directory, replacing the previous versions. Upload the contents of the repository folder rather than nesting that folder inside the website directory.
 
 Pushing to GitHub tracks and distributes the source files; it does not automatically deploy changes to the existing web host. A tagged release can identify a specific pricing version for distribution.
 

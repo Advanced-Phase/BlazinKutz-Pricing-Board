@@ -1,24 +1,3 @@
-// Update this object today; replace this data source with Google Sheets later.
-const services = [
-  { name: "Signature fade", detail: "Low, mid, high, or skin fade", price: 45, featured: true },
-  { name: "Classic haircut", detail: "Even cut, taper, and finish", price: 40 },
-  { name: "Cut + beard", detail: "Haircut, beard sculpt, hot towel", price: 60 },
-  { name: "Kids cut", detail: "Ages 12 & under", price: 35 },
-  { name: "Senior cut", detail: "Ages 65+", price: 35 },
-  { name: "Military discount", detail: "Monday–Wednesday", price: 30 },
-  { name: "Crisp line-up", detail: "Hairline, neck, and razor finish", price: 25 },
-  { name: "Beard sculpt", detail: "Shape, trim, and razor line", price: 25 },
-  { name: "Hot towel and razor shave", detail: "", price: 60 },
-  { name: "Hair design", detail: "Custom freestyle design • from", price: 15, prefix: "+" },
-  { name: "Color enhancement", detail: "Temporary line and beard fill", price: 15, prefix: "+" },
-  { name: "Facials", detail: "", price: 55, suffix: "+" }
-];
-
-const columns = document.querySelector("#menu-columns");
-const earlyBird = { name: "Early bird special", detail: "8 a.m.–11 a.m. • Monday–Thursday", price: 35 };
-const midpoint = Math.ceil(services.length / 2);
-
-
 function renderService(service, index) {
   const number = String(index + 1).padStart(2, "0");
   const item = document.createElement("article");
@@ -26,23 +5,43 @@ function renderService(service, index) {
   item.innerHTML = `
     <span class="service-number">${number}</span>
     <div class="service-info">
-      <div class="service-name">${service.name}</div>
-      <div class="service-detail">${service.detail}</div>
+      <div class="service-name"></div>
+      <div class="service-detail"></div>
     </div>
-    <strong class="service-price">${service.prefix || ""}$${service.price}${service.suffix || ""}</strong>`;
+    <strong class="service-price"></strong>`;
+  item.querySelector(".service-name").textContent = service.name;
+  item.querySelector(".service-detail").textContent = service.detail;
+  item.querySelector(".service-price").textContent = `${service.prefix || ""}$${service.price}${service.suffix || ""}`;
   return item;
 }
 
-[services.slice(0, midpoint), services.slice(midpoint)].forEach((group, columnIndex) => {
-  const column = document.createElement("div");
-  column.className = "menu-column";
-  column.append(...group.map((service, index) => renderService(service, columnIndex * midpoint + index)));
-  columns.appendChild(column);
-});
+async function loadMenu() {
+  const columns = document.querySelector("#menu-columns");
+  try {
+    const response = await fetch("menu.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error(`Menu request failed (${response.status})`);
+    const { copy, services, earlyBird } = await response.json();
+    const midpoint = Math.ceil(services.length / 2);
+    const menuColumns = [services.slice(0, midpoint), services.slice(midpoint)].map((group, columnIndex) => {
+      const column = document.createElement("div");
+      column.className = "menu-column";
+      column.append(...group.map((service, index) => renderService(service, columnIndex * midpoint + index)));
+      return column;
+    });
+    const special = renderService(earlyBird, services.length);
+    special.classList.add("early-bird");
+    document.querySelectorAll("[data-copy]").forEach(element => {
+      const value = copy[element.dataset.copy];
+      if (typeof value === "string") element.textContent = value;
+    });
+    columns.replaceChildren(...menuColumns, special);
+  } catch (error) {
+    columns.textContent = "Pricing is temporarily unavailable. Please ask your barber for current prices.";
+    console.error(error);
+  }
+}
 
-const special = renderService(earlyBird, services.length);
-special.classList.add("early-bird");
-columns.appendChild(special);
+loadMenu();
 
 // Scale the whole composition uniformly; preserve desktop sizing above 1024px.
 const mobileBoard = matchMedia("(max-width: 1024px)");

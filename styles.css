@@ -59,7 +59,7 @@ h1, h2 { font-family: "Barlow Condensed", Impact, sans-serif; text-transform: up
 h1 { font-size: clamp(34px, calc(3.2 * var(--board-vw)), 62px); }
 h1 em { color: var(--orange); font-style: italic; }
 .walkin-pill { display: flex; align-items: center; gap: 11px; padding: 12px 17px; border: 1px solid rgba(232,189,72,.34); border-radius: 99px; color: #f6edcf; font-size: clamp(11px, calc(.8 * var(--board-vw)), 15px); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; background: rgba(232,189,72,.06); }
-.walkin-pill span { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); animation: pulse 2s ease-in-out infinite; }
+.walkin-pill > span:first-child { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); animation: pulse 2s ease-in-out infinite; }
 
 .content-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, calc(25 * var(--board-vw)), 480px); gap: clamp(28px, calc(4 * var(--board-vw)), 76px); height: 70%; }
 .menu { min-width: 0; }
@@ -76,7 +76,7 @@ h1 em { color: var(--orange); font-style: italic; }
 .service-detail { color: var(--muted); font-size: clamp(9px, calc(.67 * var(--board-vw)), 13px); margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .service-price { color: var(--gold); font: 900 clamp(24px, calc(2 * var(--board-vw)), 39px)/1 "Barlow Condensed", sans-serif; }
 .menu-note { display: flex; gap: 13px; align-items: center; padding-top: clamp(12px, calc(1.8 * var(--board-vh)), 21px); color: var(--muted); font-size: clamp(9px, calc(.68 * var(--board-vw)), 13px); line-height: 1.45; }
-.menu-note span { display: grid; place-items: center; flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%; color: var(--gold); background: rgba(232,189,72,.1); font-weight: 900; }
+.menu-note > span { display: grid; place-items: center; flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%; color: var(--gold); background: rgba(232,189,72,.1); font-weight: 900; }
 .menu-note p { margin: 0; }.menu-note strong { color: var(--cream); }
 
 .booking-card { position: relative; display: flex; flex-direction: column; padding: clamp(24px, calc(2.5 * var(--board-vw)), 48px); background: linear-gradient(155deg, rgba(26,25,22,.96), rgba(10,10,10,.98)); border: 1px solid rgba(232,189,72,.3); clip-path: polygon(0 0, 91% 0, 100% 7%, 100% 100%, 0 100%); box-shadow: 0 28px 80px rgba(0,0,0,.35); }
@@ -168,7 +168,7 @@ h1, h2 { font-family: "Barlow Condensed", Impact, sans-serif; text-transform: up
 h1 { font-size: clamp(calc(34px * var(--board-scale, 1)), calc(3.2 * var(--board-vw)), calc(62px * var(--board-scale, 1))); }
 h1 em { color: var(--orange); font-style: italic; }
 .walkin-pill { display: flex; align-items: center; gap: calc(11px * var(--board-scale, 1)); padding: calc(12px * var(--board-scale, 1)) calc(17px * var(--board-scale, 1)); border: calc(1px * var(--board-scale, 1)) solid rgba(232,189,72,.34); border-radius: calc(99px * var(--board-scale, 1)); color: #f6edcf; font-size: clamp(calc(11px * var(--board-scale, 1)), calc(.8 * var(--board-vw)), calc(15px * var(--board-scale, 1))); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; background: rgba(232,189,72,.06); }
-.walkin-pill span { width: calc(8px * var(--board-scale, 1)); height: calc(8px * var(--board-scale, 1)); border-radius: 50%; background: var(--gold); box-shadow: 0 0 calc(12px * var(--board-scale, 1)) var(--gold); animation: pulse 2s ease-in-out infinite; }
+.walkin-pill > span:first-child { width: calc(8px * var(--board-scale, 1)); height: calc(8px * var(--board-scale, 1)); border-radius: 50%; background: var(--gold); box-shadow: 0 0 calc(12px * var(--board-scale, 1)) var(--gold); animation: pulse 2s ease-in-out infinite; }
 
 .content-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(calc(300px * var(--board-scale, 1)), calc(25 * var(--board-vw)), calc(480px * var(--board-scale, 1))); gap: clamp(calc(28px * var(--board-scale, 1)), calc(4 * var(--board-vw)), calc(76px * var(--board-scale, 1))); height: 70%; }
 .menu { min-width: 0; }
@@ -185,7 +185,7 @@ h1 em { color: var(--orange); font-style: italic; }
 .service-detail { color: var(--muted); font-size: clamp(calc(9px * var(--board-scale, 1)), calc(.67 * var(--board-vw)), calc(13px * var(--board-scale, 1))); margin-top: calc(5px * var(--board-scale, 1)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .service-price { color: var(--gold); font: 900 clamp(calc(24px * var(--board-scale, 1)), calc(2 * var(--board-vw)), calc(39px * var(--board-scale, 1)))/1 "Barlow Condensed", sans-serif; }
 .menu-note { display: flex; gap: calc(13px * var(--board-scale, 1)); align-items: center; padding-top: clamp(calc(12px * var(--board-scale, 1)), calc(1.8 * var(--board-vh)), calc(21px * var(--board-scale, 1))); color: var(--muted); font-size: clamp(calc(9px * var(--board-scale, 1)), calc(.68 * var(--board-vw)), calc(13px * var(--board-scale, 1))); line-height: 1.45; }
-.menu-note span { display: grid; place-items: center; flex: 0 0 auto; width: calc(27px * var(--board-scale, 1)); height: calc(27px * var(--board-scale, 1)); border-radius: 50%; color: var(--gold); background: rgba(232,189,72,.1); font-weight: 900; }
+.menu-note > span { display: grid; place-items: center; flex: 0 0 auto; width: calc(27px * var(--board-scale, 1)); height: calc(27px * var(--board-scale, 1)); border-radius: 50%; color: var(--gold); background: rgba(232,189,72,.1); font-weight: 900; }
 .menu-note p { margin: 0; }.menu-note strong { color: var(--cream); }
 
 .booking-card { position: relative; display: flex; flex-direction: column; padding: clamp(calc(24px * var(--board-scale, 1)), calc(2.5 * var(--board-vw)), calc(48px * var(--board-scale, 1))); background: linear-gradient(155deg, rgba(26,25,22,.96), rgba(10,10,10,.98)); border: calc(1px * var(--board-scale, 1)) solid rgba(232,189,72,.3); clip-path: polygon(0 0, 91% 0, 100% 7%, 100% 100%, 0 100%); box-shadow: 0 calc(28px * var(--board-scale, 1)) calc(80px * var(--board-scale, 1)) rgba(0,0,0,.35); }

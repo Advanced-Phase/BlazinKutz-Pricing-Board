@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261117-towel-one-line">
+  <link rel="stylesheet" href="styles.css?v=json-menu-1">
 </head>
 <body>
   <main class="board" aria-label="Blazin Kutz service menu">
@@ -18,36 +18,36 @@
       <div class="brand-lockup">
         <img class="logo" src="assets/blazin-kutz-gold-foil.png" alt="Blazin Kutz">
         <div class="brand-copy">
-          <p class="eyebrow">Baltimore/Washinton DC area • Premium Grooming</p>
-          <h1>Fresh cuts.<br><em>Blazin</em> confidence.</h1>
+          <p class="eyebrow"><span data-copy="location">Baltimore/Washinton DC area • Premium Grooming</span></p>
+          <h1><span data-copy="headline">Fresh cuts.</span><br><em><span data-copy="brandAccent">Blazin</span></em><span data-copy="headlineEnding"> confidence.</span></h1>
         </div>
       </div>
-      <div class="walkin-pill"><span></span> Walk-ins welcome</div>
+      <div class="walkin-pill"><span></span><span data-copy="walkIns"> Walk-ins welcome</span></div>
     </header>
 
     <section class="content-grid">
       <section class="menu" aria-labelledby="menu-heading">
         <div class="section-heading">
           <div>
-            <p class="kicker">The lineup</p>
-            <h2 id="menu-heading">Services &amp; pricing</h2>
+            <p class="kicker"><span data-copy="menuKicker">The lineup</span></p>
+            <h2 id="menu-heading"><span data-copy="menuHeading">Services &amp; pricing</span></h2>
           </div>
-          <p>Every service includes a consultation &amp; finishing style.<br><strong class="hot-towel-note">All adult haircuts come with hot towel service.</strong></p>
+          <p><span data-copy="consultation">Every service includes a consultation &amp; finishing style.</span><br><strong class="hot-towel-note"><span data-copy="hotTowel">All adult haircuts come with hot towel service.</span></strong></p>
         </div>
 
         <div class="menu-columns" id="menu-columns"></div>
 
         <div class="menu-note">
           <span>+</span>
-          <p><strong>Make it yours.</strong> Enhancements, designs, and longer-length services may add time and cost. Ask your barber before we begin.<br><b class="loyalty-note">Ask about loyalty pricing programs</b></p>
+          <p><strong><span data-copy="extrasHeading">Make it yours.</span></strong><span data-copy="extras"> Enhancements, designs, and longer-length services may add time and cost. Ask your barber before we begin.</span><br><b class="loyalty-note"><span data-copy="loyalty">Ask about loyalty pricing programs</span></b></p>
         </div>
       </section>
 
       <aside class="booking-card" aria-labelledby="booking-heading">
         <div class="booking-top">
-          <p class="kicker">Skip the wait</p>
-          <h2 id="booking-heading">Lock in<br>your next cut.</h2>
-          <p class="booking-copy">Scan the code to visit our website.</p>
+          <p class="kicker"><span data-copy="bookingKicker">Skip the wait</span></p>
+          <h2 id="booking-heading"><span data-copy="bookingHeading">Lock in</span><br><span data-copy="bookingHeadingEnding">your next cut.</span></h2>
+          <p class="booking-copy"><span data-copy="bookingInstructions">Scan the code to visit our website.</span></p>
         </div>
 
         <a class="qr-wrap" href="https://blazinkutz.com" aria-label="Visit blazinkutz.com">
@@ -58,14 +58,14 @@
 
         <div class="booking-url">
           <span class="phone-icon" aria-hidden="true">↗</span>
-          <div><small>Scan or visit</small><strong>blazinkutz.com</strong></div>
+          <div><small><span data-copy="bookingLabel">Scan or visit</span></small><strong><span data-copy="bookingDomain">blazinkutz.com</span></strong></div>
         </div>
-        <p class="fine-print">Prices shown are starting prices. Appointments are subject to availability.</p>
+        <p class="fine-print"><span data-copy="finePrint">Prices shown are starting prices. Appointments are subject to availability.</span></p>
       </aside>
     </section>
 
     <canvas class="flame-stage" id="flame-canvas" aria-hidden="true"></canvas>
   </main>
-  <script src="app.js?v=20261117-balanced-menu"></script>
+  <script src="app.js?v=json-menu-1"></script>
 </body>
 </html>
