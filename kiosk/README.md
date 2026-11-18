@@ -94,6 +94,10 @@ systemctl status blazin-board.service blazin-update.timer
 sudo journalctl -b -u blazin-wifi -u blazin-enroll -u blazin-tailscale
 ```
 
+![Mockup of the Wi-Fi setup menu opened with Ctrl+Alt+W](docs/wifi-shortcut-mockup.jpg)
+
+*Mockup with an example connection name. The terminal appearance may vary on the Pi.*
+
 ### Update the menu on an already flashed Pi
 
 From the project directory on your computer, copy the four Wi-Fi menu files over Tailscale SSH. Substitute your Pi’s Tailscale hostname for `PI_NAME`.
