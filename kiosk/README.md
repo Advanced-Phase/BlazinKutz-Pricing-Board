@@ -4,15 +4,35 @@ This image uses Raspberry Pi OS Desktop (64-bit) dated 2026-10-06, Chromium, lab
 
 ## 1. Flash the microSD card
 
-Use [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your Mac, Windows PC, or Linux computer. A 16 GB or larger card is recommended. Flashing erases the selected card.
+Both programs can flash this prebuilt kiosk image. Use whichever you already have. Start with a 16 GB or larger microSD card. Flashing erases the selected card, so double-check the destination by name and capacity.
 
-1. Put `BlazinKutz-Pi5-Kiosk.img.xz` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and run `shasum -a 256 -c BlazinKutz-Pi5-Kiosk.img.xz.sha256`. Proceed when it reports `OK`.
-2. Choose **Raspberry Pi 5** as the device. Under OS, choose **Use custom** and select the `.img.xz` file.
-3. Select the microSD card by its capacity and name. If asked, choose **Skip customisation**. The kiosk image contains its own first-boot setup.
-4. Wait for writing and verification to finish. Reinsert the card to mount **bootfs**. If macOS offers to initialize an unreadable partition, choose **Ignore**. The Linux partition is for the Pi.
-5. Add the provisioning files described below to the top level of **bootfs**. Eject the card before moving it to the Pi.
+Put `BlazinKutz-Pi5-Kiosk.img.xz` and its `.sha256` companion in the same folder. On macOS, open Terminal in that folder and verify the download:
 
-[balenaEtcher](https://etcher.balena.io/) is also an option. If it does not accept the compressed file, decompress it with `xz -dk BlazinKutz-Pi5-Kiosk.img.xz` and select the resulting `.img` in Etcher. Use **Flash from file**, choose the microSD card, and wait for verification.
+```sh
+shasum -a 256 -c BlazinKutz-Pi5-Kiosk.img.xz.sha256
+```
+
+Proceed when it reports `OK`.
+
+### Option A: balenaEtcher
+
+1. Open [balenaEtcher](https://etcher.balena.io/) and insert the microSD card.
+2. Click **Flash from file** and select `BlazinKutz-Pi5-Kiosk.img.xz`. Etcher supports XZ images. If your copy of Etcher has trouble with the compressed file, run `xz -dk BlazinKutz-Pi5-Kiosk.img.xz` and select the resulting `.img` instead.
+3. Click **Select target** and choose the microSD card.
+4. Click **Flash!** and approve the operating system prompt if shown. Wait for writing and validation to finish.
+
+### Option B: Raspberry Pi Imager
+
+1. Open [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and insert the microSD card.
+2. Select **Raspberry Pi 5** as the device. Under OS, choose **Use custom** and select `BlazinKutz-Pi5-Kiosk.img.xz`.
+3. Under Storage, select the microSD card. If prompted, choose **Skip customisation**. This image already includes its first-boot setup.
+4. Confirm the write and wait for verification to finish.
+
+### After flashing with either tool
+
+1. Reinsert the card and open **bootfs**. If macOS offers to initialize an unreadable partition, choose **Ignore**. The unreadable Linux partition is expected.
+2. Add any provisioning files you want to use to the top level of **bootfs**, next to `cmdline.txt`, as described below.
+3. Eject the card, insert it into the Pi, and power on.
 
 ## 2. Preconfigure Wi-Fi and remote access
 
