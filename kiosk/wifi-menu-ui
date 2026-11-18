@@ -1,0 +1,28 @@
+#!/bin/bash
+# Keep passwords on the attached display and out of shell arguments and logs.
+while true; do
+  clear
+  printf 'Wi-Fi setup\n\n'
+  nmcli -f GENERAL.CONNECTION,GENERAL.STATE device show wlan0
+  printf '\n1) View saved Wi-Fi profiles and passwords\n'
+  printf '2) Edit or add a Wi-Fi profile\n'
+  printf '3) Activate a saved network\n'
+  printf '4) Return to the pricing board (or press Escape)\n\n'
+  read -r -p 'Choose an option: ' choice || exit 0
+  case "$choice" in
+    1)
+      clear
+      printf 'Saved Wi-Fi profiles (passwords visible)\n\n'
+      while IFS=: read -r uuid type; do
+        case "$type" in wifi|802-11-wireless) ;; *) continue ;; esac
+        nmcli --show-secrets -f connection.id,802-11-wireless.ssid,802-11-wireless-security.psk connection show uuid "$uuid"
+        printf '\n'
+      done < <(nmcli -t -f UUID,TYPE connection show)
+      read -r -p 'Press Enter to hide passwords. ' _
+      printf '\033[3J'
+      ;;
+    2) nmtui edit ;;
+    3) nmtui connect ;;
+    4|'') clear; exit 0 ;;
+  esac
+done

@@ -5,6 +5,7 @@ payload=$boot/blazin-kiosk
 root=/var/lib/blazin-kiosk
 install -d /opt/blazin-kiosk "$root"
 cp -a "$payload/runtime/." /opt/blazin-kiosk/
+bash /opt/blazin-kiosk/install-wifi-menu.sh
 install -m 755 "$payload/tailscale" "$payload/tailscaled" /usr/local/sbin/
 if ! id board >/dev/null 2>&1; then
   useradd -m -s /bin/bash board

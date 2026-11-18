@@ -1,0 +1,9 @@
+// Allow the physical kiosk session to manage and read NetworkManager profiles.
+polkit.addRule(function(action, subject) {
+    if (subject.user === "board" && subject.local && subject.active &&
+        (action.id === "org.freedesktop.NetworkManager.settings.modify.system" ||
+         action.id === "org.freedesktop.NetworkManager.network-control" ||
+         action.id === "org.freedesktop.NetworkManager.wifi.scan")) {
+        return polkit.Result.YES;
+    }
+});

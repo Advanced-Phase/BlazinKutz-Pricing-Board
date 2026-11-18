@@ -1,15 +1,74 @@
-#!/bin/bash
-# NetworkManager asks for the password directly. Never put it in argv or logs.
-old=$(nmcli -g GENERAL.CON-UUID device show wlan0 2>/dev/null)
-nmcli device wifi list ifname wlan0
-read -r -p 'Enter Wi-Fi SSID (Enter to cancel): ' ssid
-[ -n "$ssid" ] || exit 0
-if nmcli --ask --wait 25 device wifi connect "$ssid" ifname wlan0; then
-  printf 'Wi-Fi connected. Close this window to return to the board.\n'
-else
-  if [ -n "$old" ] && [ "$old" != "--" ]; then
-    nmcli --wait 20 connection up uuid "$old" ifname wlan0
-  fi
-  printf 'Could not connect. Press Ctrl+Alt+W to try again.\n'
-fi
-read -r -p 'Press Enter to close. ' _
+#!/usr/bin/python3
+"""Run the Wi-Fi UI in a PTY so Escape can close the window from any screen."""
+import errno
+import fcntl
+import os
+from pathlib import Path
+import pty
+import select
+import signal
+import sys
+import termios
+import tty
+
+
+def main():
+    if not sys.stdin.isatty():
+        raise SystemExit("Run the Wi-Fi menu from a terminal")
+    terminal = sys.stdin.fileno()
+    saved = termios.tcgetattr(terminal)
+    child, console = pty.fork()
+    if child == 0:
+        ui = Path(__file__).with_name("wifi-menu-ui")
+        os.execv("/bin/bash", ["bash", str(ui)])
+
+    def resize(*_):
+        size = fcntl.ioctl(terminal, termios.TIOCGWINSZ, bytes(8))
+        fcntl.ioctl(console, termios.TIOCSWINSZ, size)
+
+    pending_escape = False
+    try:
+        tty.setraw(terminal)
+        resize()
+        signal.signal(signal.SIGWINCH, resize)
+        while True:
+            ready, _, _ = select.select([terminal, console], [], [], 0.08 if pending_escape else None)
+            if not ready:
+                break
+            if terminal in ready:
+                data = os.read(terminal, 4096)
+                if not data:
+                    break
+                if pending_escape:
+                    data = b"\x1b" + data
+                    pending_escape = False
+                if data.endswith(b"\x1b"):
+                    data = data[:-1]
+                    pending_escape = True
+                if data:
+                    os.write(console, data)
+            if console in ready:
+                try:
+                    data = os.read(console, 65536)
+                except OSError as error:
+                    if error.errno != errno.EIO:
+                        raise
+                    break
+                if not data:
+                    break
+                os.write(sys.stdout.fileno(), data)
+    finally:
+        signal.signal(signal.SIGWINCH, signal.SIG_DFL)
+        os.close(console)
+        try:
+            os.killpg(child, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        os.waitpid(child, 0)
+        termios.tcsetattr(terminal, termios.TCSADRAIN, saved)
+        sys.stdout.write("\x1b[?1049l\x1b[3J\x1b[2J\x1b[H")
+        sys.stdout.flush()
+
+
+if __name__ == "__main__":
+    main()

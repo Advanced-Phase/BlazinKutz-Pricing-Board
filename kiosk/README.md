@@ -77,8 +77,9 @@ Your Tailscale identity authorizes SSH. There is no root password, SSH password,
 
 1. Insert the card in the Pi 5 and connect HDMI and power. Let the initial provisioning and automatic reboot finish. The board runs from the Pi even if Wi-Fi or Tailscale is unavailable.
 2. Turn off any auto-off or eco timer on the TV itself. The Pi kiosk is configured to stay awake.
-3. If Wi-Fi changes, plug in a keyboard and press **Ctrl+Alt+W**. Enter the network SSID and follow the masked password prompt. The board runs behind the menu. If activation fails, the menu attempts to restore the previously active connection.
-4. If you skipped Tailscale or its key expires before use, shut down the Pi, put a fresh `tailscale.key` on **bootfs**, and boot again. No reflash is needed.
+3. If Wi-Fi changes, plug in a keyboard and press **Ctrl+Alt+W**. The board runs behind the menu. Choose **View saved Wi-Fi profiles and passwords** to see the active connection name and saved Wi-Fi settings. Passwords are visible on the TV while that option is open. Press Enter to hide them. Choose **Edit or add a Wi-Fi profile**, then select an existing profile or choose **Add → Wi-Fi**. Enter the SSID and security settings, set the password, and save. Choose **Activate a saved network** to connect. If the new profile fails, select your previous network.
+4. Press **Escape** from any Wi-Fi menu screen to close the window and discard edits still in the open form. Changes already saved or activation already submitted are kept. To save first, choose **OK** inside the editor before pressing Escape.
+5. If you skipped Tailscale or its key expires before use, shut down the Pi, put a fresh `tailscale.key` on **bootfs**, and boot again. No reflash is needed.
 
 After SSH is working, check Wi-Fi, Tailscale, and the local display service with:
 
@@ -88,6 +89,17 @@ tailscale status
 systemctl status blazin-board.service blazin-update.timer
 sudo journalctl -b -u blazin-wifi -u blazin-enroll -u blazin-tailscale
 ```
+
+### Update the menu on an already flashed Pi
+
+From the project directory on your computer, copy the four Wi-Fi menu files over Tailscale SSH. Substitute your Pi’s Tailscale hostname for `PI_NAME`.
+
+```sh
+scp kiosk/{wifi-menu,wifi-menu-ui,49-blazin-wifi.rules,install-wifi-menu.sh} kioskadmin@PI_NAME:
+ssh kioskadmin@PI_NAME 'sudo bash ~/install-wifi-menu.sh'
+```
+
+Close any open Wi-Fi menu and press **Ctrl+Alt+W** again. This installs the menu and a NetworkManager permission rule scoped to the active local kiosk account. The rule allows that account to manage NetworkManager profiles, so use the editor on the dedicated kiosk.
 
 ## Content and update recovery
 
